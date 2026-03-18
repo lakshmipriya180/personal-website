@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lakshmi Chellasamy</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0B0B0F;
+  --bg-card: #131318;
+  --bg-elevated: #1A1A22;
+  --text-primary: #F0EDE6;
+  --text-secondary: #8A8690;
+  --text-muted: #5A5660;
+  --accent: #E8C468;
+  --accent-dim: rgba(232, 196, 104, 0.12);
+  --accent-glow: rgba(232, 196, 104, 0.06);
+  --coral: #E87461;
+  --teal: #5EC4B6;
+  --lavender: #A78BFA;
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent-dim) transparent; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(232,196,104,0.25); }
+  70% { box-shadow: 0 0 0 12px rgba(232,196,104,0); }
+  100% { box-shadow: 0 0 0 0 rgba(232,196,104,0); }
+}
+@keyframes pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(74,222,128,0); }
+  100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+}
+.animate { opacity: 0; }
+.animate.visible { animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.animate-delay-1 { animation-delay: 0.1s !important; }
+.animate-delay-2 { animation-delay: 0.2s !important; }
+.animate-delay-3 { animation-delay: 0.3s !important; }
+.animate-delay-4 { animation-delay: 0.4s !important; }
+.animate-delay-5 { animation-delay: 0.5s !important; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.2rem 3rem;
+  display: flex; justify-content: space-between; align-items: center;
+  backdrop-filter: blur(20px);
+  background: rgba(11, 11, 15, 0.8);
+  border-bottom: 1px solid rgba(232, 196, 104, 0.06);
+  transition: all 0.3s ease;
+}
+nav.scrolled { padding: 0.8rem 3rem; background: rgba(11, 11, 15, 0.95); }
+.nav-logo {
+  font-family: var(--serif); font-size: 1.5rem;
+  color: var(--text-primary); text-decoration: none; letter-spacing: -0.02em;
+}
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  color: var(--text-secondary); text-decoration: none; font-size: 0.82rem;
+  font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  transition: color 0.3s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px; background: var(--accent); transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--accent); }
+.nav-links a:hover::after { width: 100%; }
+
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: 8rem 3rem 4rem; position: relative; overflow: hidden;
+}
+.hero-bg-orb { position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; }
+.hero-bg-orb.one {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(232,196,104,0.07) 0%, transparent 70%);
+  top: -100px; right: -100px;
+}
+.hero-bg-orb.two {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 70%);
+  bottom: 100px; left: -100px;
+}
+.hero-content { max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
+.hero-label {
+  font-family: var(--mono); font-size: 0.75rem; color: var(--accent);
+  letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem;
+  animation: fadeIn 0.6s 0.2s both;
+}
+.hero-label::before { content: '//'; margin-right: 0.5rem; opacity: 0.5; }
+.hero h1 {
+  font-family: var(--serif); font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: 1.05; font-weight: 400; letter-spacing: -0.03em;
+  margin-bottom: 2rem; animation: fadeUp 0.8s 0.3s both;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-subtitle {
+  font-size: 1.2rem; color: var(--text-secondary); max-width: 580px;
+  line-height: 1.8; margin-bottom: 3rem; animation: fadeUp 0.8s 0.5s both; font-weight: 300;
+}
+.hero-cta-row { display: flex; gap: 1.2rem; align-items: center; animation: fadeUp 0.8s 0.7s both; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.9rem 2rem; background: var(--accent); color: var(--bg);
+  font-family: var(--sans); font-size: 0.85rem; font-weight: 600;
+  text-decoration: none; letter-spacing: 0.04em; border: none; cursor: pointer; transition: all 0.3s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232, 196, 104, 0.25); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.9rem 2rem; background: transparent; color: var(--text-secondary);
+  font-family: var(--sans); font-size: 0.85rem; font-weight: 500;
+  text-decoration: none; letter-spacing: 0.04em;
+  border: 1px solid var(--bg-elevated); cursor: pointer; transition: all 0.3s;
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn-purple {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.9rem 2rem; background: var(--lavender); color: var(--bg);
+  font-family: var(--sans); font-size: 0.85rem; font-weight: 600;
+  text-decoration: none; letter-spacing: 0.04em; border: none; cursor: pointer; transition: all 0.3s;
+}
+.btn-purple:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(167,139,250,0.25); }
+.hero-stats {
+  display: flex; gap: 3.5rem; margin-top: 5rem; padding-top: 3rem;
+  border-top: 1px solid rgba(255,255,255,0.05); animation: fadeUp 0.8s 0.9s both;
+}
+.stat-item .stat-number { font-family: var(--serif); font-size: 2.5rem; color: var(--accent); line-height: 1; }
+.stat-item .stat-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.4rem; letter-spacing: 0.05em; text-transform: uppercase; }
+
+section { padding: 7rem 3rem; max-width: 1200px; margin: 0 auto; }
+.section-label {
+  font-family: var(--mono); font-size: 0.7rem; color: var(--accent);
+  letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1rem;
+}
+.section-label::before { content: '\2192\0020'; opacity: 0.5; }
+.section-title {
+  font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.15; font-weight: 400; letter-spacing: -0.02em; margin-bottom: 1.5rem;
+}
+.section-subtitle { color: var(--text-secondary); font-size: 1.05rem; max-width: 600px; line-height: 1.8; font-weight: 300; }
+
+.value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 4rem; }
+.value-card {
+  background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04);
+  padding: 2.5rem; position: relative; overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.value-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0; transition: opacity 0.4s;
+}
+.value-card:hover { transform: translateY(-4px); border-color: rgba(232,196,104,0.12); background: var(--bg-elevated); }
+.value-card:hover::before { opacity: 1; }
+.value-icon {
+  width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; margin-bottom: 1.5rem;
+  background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(232,196,104,0.1);
+}
+.value-card:nth-child(2) .value-icon { background: rgba(232,116,97,0.1); color: var(--coral); border-color: rgba(232,116,97,0.15); }
+.value-card:nth-child(3) .value-icon { background: rgba(94,196,182,0.1); color: var(--teal); border-color: rgba(94,196,182,0.15); }
+.value-card h3 { font-family: var(--serif); font-size: 1.4rem; margin-bottom: 0.8rem; font-weight: 400; }
+.value-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.75; font-weight: 300; }
+.value-metric {
+  display: inline-block; margin-top: 1.2rem; padding: 0.35rem 0.8rem;
+  background: var(--accent-dim); font-family: var(--mono); font-size: 0.72rem;
+  color: var(--accent); letter-spacing: 0.05em;
+}
+.value-card:nth-child(2) .value-metric { background: rgba(232,116,97,0.08); color: var(--coral); }
+.value-card:nth-child(3) .value-metric { background: rgba(94,196,182,0.08); color: var(--teal); }
+
+.journey-section { position: relative; }
+.journey-timeline { position: relative; margin-top: 4rem; padding-left: 3rem; }
+.journey-timeline::before {
+  content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 1px;
+  background: linear-gradient(to bottom, var(--accent), var(--accent-dim), transparent);
+}
+.journey-item { position: relative; margin-bottom: 3.5rem; padding-bottom: 2rem; }
+.journey-item::before {
+  content: ''; position: absolute; left: -3rem; top: 8px;
+  width: 15px; height: 15px; background: var(--bg);
+  border: 2px solid var(--accent); border-radius: 50%; z-index: 1;
+}
+.journey-item.active::before { background: var(--accent); animation: pulse-ring 2s infinite; }
+.journey-era { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.journey-item h3 { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; margin-bottom: 0.3rem; }
+.journey-role { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.8rem; }
+.journey-item p { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.8; max-width: 620px; font-weight: 300; }
+.journey-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.journey-tag {
+  font-family: var(--mono); font-size: 0.65rem; padding: 0.25rem 0.7rem;
+  background: var(--bg-elevated); color: var(--text-muted);
+  border: 1px solid rgba(255,255,255,0.04); letter-spacing: 0.05em;
+}
+
+.tools-section {
+  background: var(--bg-card); border-top: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.04); max-width: 100%; padding: 7rem 3rem;
+}
+.tools-inner { max-width: 1200px; margin: 0 auto; }
+.tools-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: rgba(255,255,255,0.04); margin-top: 3.5rem; border: 1px solid rgba(255,255,255,0.04);
+}
+.tool-cell { background: var(--bg-card); padding: 2rem; text-align: center; transition: all 0.3s; }
+.tool-cell:hover { background: var(--bg-elevated); }
+.tool-cell h4 { font-family: var(--mono); font-size: 0.68rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.8rem; }
+.tool-cell p { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6; font-weight: 300; }
+
+.results-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 4rem; }
+.result-card {
+  background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04);
+  padding: 2.5rem; display: flex; gap: 1.5rem; align-items: flex-start; transition: all 0.3s;
+}
+.result-card:hover { border-color: rgba(232,196,104,0.1); transform: translateY(-2px); }
+.result-number { font-family: var(--serif); font-size: 2.8rem; color: var(--accent); line-height: 1; flex-shrink: 0; min-width: 80px; }
+.result-card:nth-child(2) .result-number { color: var(--coral); }
+.result-card:nth-child(3) .result-number { color: var(--teal); }
+.result-card:nth-child(4) .result-number { color: var(--lavender); }
+.result-text h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; }
+.result-text p { font-size: 0.82rem; color: var(--text-muted); font-weight: 300; }
+
+.bip-section { position: relative; overflow: hidden; }
+.bip-section::before {
+  content: ''; position: absolute; top: -200px; right: -200px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(167,139,250,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.bip-card {
+  margin-top: 3.5rem; background: var(--bg-card);
+  border: 1px solid rgba(167,139,250,0.12); padding: 3.5rem;
+  position: relative; overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center;
+}
+.bip-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--lavender), var(--accent), var(--teal));
+}
+.bip-live-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.35rem 1rem; background: rgba(167,139,250,0.1);
+  border: 1px solid rgba(167,139,250,0.2); font-family: var(--mono);
+  font-size: 0.7rem; color: var(--lavender); letter-spacing: 0.12em;
+  text-transform: uppercase; margin-bottom: 1.5rem;
+}
+.bip-live-dot {
+  width: 6px; height: 6px; background: #4ade80; border-radius: 50%;
+  animation: pulse-green 2s infinite; box-shadow: 0 0 6px #4ade80;
+}
+.bip-left h3 { font-family: var(--serif); font-size: 2rem; font-weight: 400; line-height: 1.2; margin-bottom: 1rem; }
+.bip-left h3 span { color: var(--lavender); }
+.bip-left > p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.8; font-weight: 300; margin-bottom: 1.5rem; }
+.bip-tech-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+.bip-tech-tag {
+  font-family: var(--mono); font-size: 0.65rem; padding: 0.3rem 0.75rem;
+  background: var(--bg-elevated); color: var(--text-secondary);
+  border: 1px solid rgba(255,255,255,0.06); letter-spacing: 0.05em;
+}
+.bip-tech-tag.highlight { background: rgba(167,139,250,0.1); color: var(--lavender); border-color: rgba(167,139,250,0.2); }
+.bip-cta-row { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.bip-right { display: flex; flex-direction: column; gap: 1.2rem; }
+.bip-stat-row { display: flex; gap: 1.2rem; }
+.bip-stat-box {
+  flex: 1; background: var(--bg-elevated); border: 1px solid rgba(255,255,255,0.04);
+  padding: 1.5rem; text-align: center; transition: all 0.3s;
+}
+.bip-stat-box:hover { border-color: rgba(167,139,250,0.15); }
+.bip-stat-box .stat-number { font-family: var(--serif); font-size: 2.2rem; color: var(--lavender); line-height: 1; }
+.bip-stat-box .stat-label { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.4rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.bip-log {
+  background: var(--bg); border: 1px solid rgba(255,255,255,0.06);
+  padding: 1.5rem; font-family: var(--mono); font-size: 0.75rem; line-height: 2; color: var(--text-muted);
+}
+.bip-log .log-line::before { content: '>'; color: var(--lavender); margin-right: 0.6rem; }
+.bip-log .log-highlight { color: var(--accent); }
+.bip-log .log-green { color: #4ade80; }
+
+.cta-section { text-align: center; padding: 8rem 3rem; position: relative; max-width: 1200px; margin: 0 auto; }
+.cta-section::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 50%, var(--accent-glow), transparent);
+  pointer-events: none;
+}
+.cta-section .section-title { max-width: 600px; margin: 0 auto 1rem; }
+.cta-section .section-subtitle { max-width: 480px; margin: 0 auto 2.5rem; }
+.cta-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+footer { padding: 3rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.04); }
+footer p { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.05em; }
+footer a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+footer a:hover { color: var(--accent); }
+
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { gap: 1.2rem; }
+  .nav-links a { font-size: 0.72rem; }
+  .hero { padding: 7rem 1.5rem 3rem; }
+  .hero-stats { gap: 2rem; flex-wrap: wrap; }
+  section { padding: 5rem 1.5rem; }
+  .value-grid { grid-template-columns: 1fr; }
+  .tools-grid { grid-template-columns: repeat(2, 1fr); }
+  .results-grid { grid-template-columns: 1fr; }
+  .bip-card { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; }
+}
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .hero h1 { font-size: 2.4rem; }
+  .hero-stats { flex-direction: column; gap: 1.5rem; }
+  .tools-grid { grid-template-columns: 1fr; }
+  .hero-cta-row { flex-direction: column; align-items: flex-start; }
+  .bip-stat-row { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">L<span>.</span>C</a>
+  <ul class="nav-links">
+    <li><a href="#value">Value</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#building">Building</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg-orb one"></div>
+  <div class="hero-bg-orb two"></div>
+  <div class="hero-content">
+    <div class="hero-label">AI-Powered Marketing &amp; SaaS</div>
+    <h1>I don't run marketing.<br>I <em>engineer</em> the systems<br>that make it scale.</h1>
+    <p class="hero-subtitle">Building marketing automation, AI-driven workflows, and data analytics systems that turn strategy into measurable, repeatable growth.</p>
+    <div class="hero-cta-row">
+      <a href="#contact" class="btn-primary">Let's Talk &#8594;</a>
+      <a href="#journey" class="btn-ghost">See My Story</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number">45%</div>
+        <div class="stat-label">Audience Growth</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">20%</div>
+        <div class="stat-label">Sales Lift via Automation</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">4+</div>
+        <div class="stat-label">Industries Served</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="value">
+  <div class="section-label animate">What I Bring</div>
+  <h2 class="section-title animate animate-delay-1">Three reasons to work<br>with me</h2>
+  <p class="section-subtitle animate animate-delay-2">Not just another marketer. An engineer who builds the machine.</p>
+  <div class="value-grid">
+    <div class="value-card animate animate-delay-3">
+      <div class="value-icon">&#9889;</div>
+      <h3>AI-Native Marketing Operator</h3>
+      <p>I build automated workflows that produce measurable results &#8212; not just campaigns that need constant hand-holding. From ManyChat automations to AI-powered content pipelines, I design systems that compound.</p>
+      <span class="value-metric">BUILDS THE MACHINE, NOT JUST RUNS IT</span>
+    </div>
+    <div class="value-card animate animate-delay-4">
+      <div class="value-icon">&#9670;</div>
+      <h3>Data-to-Decision Bridge</h3>
+      <p>Predictive analytics, variance reporting, ROI dashboards &#8212; I translate raw data into strategic decisions. Proven across real estate, automotive, and digital marketing domains.</p>
+      <span class="value-metric">INSIGHT &#8594; ACTION &#8594; OUTCOME</span>
+    </div>
+    <div class="value-card animate animate-delay-5">
+      <div class="value-icon">&#9651;</div>
+      <h3>Full-Stack Growth Builder</h3>
+      <p>Content strategy at the top, CRM and automation in the middle, analytics at the bottom. I own the entire funnel and I'm extending it into SaaS product development.</p>
+      <span class="value-metric">TOP OF FUNNEL &#8594; BOTTOM LINE</span>
+    </div>
+  </div>
+</section>
+
+<section id="journey" class="journey-section">
+  <div class="section-label animate">The Builder's Arc</div>
+  <h2 class="section-title animate animate-delay-1">From engineering mindset<br>to marketing systems</h2>
+  <p class="section-subtitle animate animate-delay-2">Every chapter added a layer. Together, they make something rare.</p>
+  <div class="journey-timeline">
+    <div class="journey-item animate">
+      <div class="journey-era">Act I &#8212; The Foundation</div>
+      <h3>The Engineer's Mindset</h3>
+      <div class="journey-role">B.E. Electronics &amp; Communication, Anna University &#183; Technical Analyst, Goken America (Honda)</div>
+      <p>Started with systematic thinking &#8212; engineering test analysis, technical documentation, cross-functional problem solving across factory, engineering, and product teams. This is where the rigor comes from.</p>
+      <div class="journey-tags">
+        <span class="journey-tag">Technical Analysis</span>
+        <span class="journey-tag">Documentation</span>
+        <span class="journey-tag">Stakeholder Management</span>
+        <span class="journey-tag">Quality Assurance</span>
+      </div>
+    </div>
+    <div class="journey-item animate">
+      <div class="journey-era">Act II &#8212; The Pivot</div>
+      <h3>Data Meets Business</h3>
+      <div class="journey-role">Real Estate Analytics Associate, ALDI &#183; Sales &amp; Marketing, Lightyear Marketing</div>
+      <p>Moved into the business side but carried the analytical rigor along. Predictive analytics for store development, variance reporting for budgets, and direct customer engagement. Learned to connect numbers to strategy.</p>
+      <div class="journey-tags">
+        <span class="journey-tag">Predictive Analytics</span>
+        <span class="journey-tag">Siteintel</span>
+        <span class="journey-tag">Budget Analysis</span>
+        <span class="journey-tag">Brand Strategy</span>
+      </div>
+    </div>
+    <div class="journey-item active animate">
+      <div class="journey-era">Act III &#8212; The Synthesis</div>
+      <h3>AI + Marketing + Systems</h3>
+      <div class="journey-role">Freelance Content Creator &amp; Strategist &#183; SaaS Builder</div>
+      <p>Now combining everything &#8212; AI-powered content pipelines, automated engagement workflows, data-driven campaign optimization, and building a SaaS product. Not choosing between technical and creative. Fusing them.</p>
+      <div class="journey-tags">
+        <span class="journey-tag">AI Automation</span>
+        <span class="journey-tag">ManyChat</span>
+        <span class="journey-tag">LangChain</span>
+        <span class="journey-tag">Python</span>
+        <span class="journey-tag">SaaS Dev</span>
+        <span class="journey-tag">Multi-Agent AI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tools-section" id="tools">
+  <div class="tools-inner">
+    <div class="section-label animate">Toolkit</div>
+    <h2 class="section-title animate animate-delay-1">What I work with</h2>
+    <p class="section-subtitle animate animate-delay-2">Across content, automation, analytics, and development.</p>
+    <div class="tools-grid">
+      <div class="tool-cell animate">
+        <h4>AI &amp; Automation</h4>
+        <p>ChatGPT, LLMs, RAG, LangChain, LangGraph, Make, Zapier, ManyChat</p>
+      </div>
+      <div class="tool-cell animate animate-delay-1">
+        <h4>Content &amp; Social</h4>
+        <p>Canva, CapCut, Captions.ai, Sprout Social, Meta Business Suite</p>
+      </div>
+      <div class="tool-cell animate animate-delay-2">
+        <h4>Analytics &amp; Data</h4>
+        <p>Google Analytics, SQL, Excel, Siteintel, Native Platform Analytics</p>
+      </div>
+      <div class="tool-cell animate animate-delay-3">
+        <h4>Development</h4>
+        <p>Python, Docker, Multi-Agent Orchestration, Prompt Engineering</p>
+      </div>
+      <div class="tool-cell animate">
+        <h4>Platforms</h4>
+        <p>Instagram, LinkedIn, YouTube, TikTok, Facebook, Twitter/X, Reddit</p>
+      </div>
+      <div class="tool-cell animate animate-delay-1">
+        <h4>Email &amp; CRM</h4>
+        <p>ConvertKit, Lead Generation Workflows, CRM Integrations</p>
+      </div>
+      <div class="tool-cell animate animate-delay-2">
+        <h4>Project Mgmt</h4>
+        <p>Notion, Google Docs, Asana</p>
+      </div>
+      <div class="tool-cell animate animate-delay-3">
+        <h4>Certifications</h4>
+        <p>Make Academy AI Badge, Gen AI Architect Program, Prompt Battle Winner</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="results">
+  <div class="section-label animate">Impact</div>
+  <h2 class="section-title animate animate-delay-1">Numbers that matter</h2>
+  <p class="section-subtitle animate animate-delay-2">Real outcomes from real engagements.</p>
+  <div class="results-grid">
+    <div class="result-card animate animate-delay-3">
+      <div class="result-number">30&#8211;45%</div>
+      <div class="result-text">
+        <h4>Client Following Growth</h4>
+        <p>Via strategic content calendars, Reels, and platform-specific optimization</p>
+      </div>
+    </div>
+    <div class="result-card animate animate-delay-4">
+      <div class="result-number">+20%</div>
+      <div class="result-text">
+        <h4>Digital Product Sales</h4>
+        <p>Through ManyChat automated engagement workflows within 30 days</p>
+      </div>
+    </div>
+    <div class="result-card animate animate-delay-5">
+      <div class="result-number">+22%</div>
+      <div class="result-text">
+        <h4>Website Traffic Boost</h4>
+        <p>From social media ad campaigns and brand positioning strategies</p>
+      </div>
+    </div>
+    <div class="result-card animate animate-delay-3">
+      <div class="result-number">+12%</div>
+      <div class="result-text">
+        <h4>Appointment Increase</h4>
+        <p>Driven by automated lead nurturing workflows in 30 days</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="building" class="bip-section">
+  <div class="section-label animate">Currently Building</div>
+  <h2 class="section-title animate animate-delay-1">Building in public,<br>one commit at a time</h2>
+  <p class="section-subtitle animate animate-delay-2">Turning the builder's mindset into a real product &#8212; live, transparent, and with an audience watching.</p>
+  <div class="bip-card animate animate-delay-3">
+    <div class="bip-left">
+      <div class="bip-live-badge"><span class="bip-live-dot"></span> Building in Public</div>
+      <h3>Family Planner &amp; <span>Emotional Wellbeing</span> App</h3>
+      <p>An AI-powered family planner and emotional wellbeing app for modern busy families &#8212; helping households organize daily life, nurture emotional connections, and stay in sync. Built from scratch with Claude Code and shared openly every step of the way.</p>
+      <div class="bip-tech-stack">
+        <span class="bip-tech-tag highlight">Claude Code</span>
+        <span class="bip-tech-tag highlight">AI-Powered</span>
+        <span class="bip-tech-tag">Python</span>
+        <span class="bip-tech-tag">LangChain</span>
+        <span class="bip-tech-tag">Docker</span>
+        <span class="bip-tech-tag">Multi-Agent</span>
+      </div>
+      <div class="bip-cta-row">
+        <a href="https://linkedin.com/in/lakshmipriyachellasamy" target="_blank" class="btn-purple">Follow the Journey &#8599;</a>
+        <a href="https://github.com/lakshmipriya180" target="_blank" class="btn-ghost">View on GitHub &#8599;</a>
+      </div>
+    </div>
+    <div class="bip-right">
+      <div class="bip-stat-row">
+        <div class="bip-stat-box">
+          <div class="stat-number">100+</div>
+          <div class="stat-label">Waitlist Signups</div>
+        </div>
+        <div class="bip-stat-box">
+          <div class="stat-number">Live</div>
+          <div class="stat-label">Build Status</div>
+        </div>
+      </div>
+      <div class="bip-stat-row">
+        <div class="bip-stat-box">
+          <div class="stat-number">1</div>
+          <div class="stat-label">Founder Building</div>
+        </div>
+        <div class="bip-stat-box">
+          <div class="stat-number">AI</div>
+          <div class="stat-label">Powered by Claude</div>
+        </div>
+      </div>
+      <div class="bip-log">
+        <div class="log-line"><span class="log-green">&#10003;</span> Product concept validated with family users</div>
+        <div class="log-line"><span class="log-green">&#10003;</span> <span class="log-highlight">100 people</span> on the waitlist</div>
+        <div class="log-line"><span class="log-green">&#10003;</span> Core architecture built with Claude Code</div>
+        <div class="log-line">Shipping features &amp; sharing learnings publicly...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contact">
+  <div class="section-label animate">Get in Touch</div>
+  <h2 class="section-title animate animate-delay-1">Ready to build marketing<br>that's <em style="font-family:var(--serif);color:var(--accent);">engineered</em>?</h2>
+  <p class="section-subtitle animate animate-delay-2">Let's talk about how AI-powered systems can scale your growth.</p>
+  <div class="cta-links animate animate-delay-3">
+    <a href="/cdn-cgi/l/email-protection#d6a6a4bfafb7bcb7afe4eff0f5e0e2edafb7beb9b9f8b5b9bb" class="btn-primary">Email Me &#8594;</a>
+    <a href="https://linkedin.com/in/lakshmipriyachellasamy" target="_blank" class="btn-ghost">LinkedIn &#8599;</a>
+    <a href="https://github.com/lakshmipriya180" target="_blank" class="btn-ghost">GitHub &#8599;</a>
+  </div>
+</section>
+
+<footer>
+  <p>&#169; 2026 Lakshmi Chellasamy &#160;&#183;&#160; Orlando, FL &#160;&#183;&#160; <a href="https://linkedin.com/in/lakshmipriyachellasamy" target="_blank">LinkedIn</a> &#160;&#183;&#160; <a href="https://github.com/lakshmipriya180" target="_blank">GitHub</a></p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.animate').forEach(function(el) { observer.observe(el); });
+
+var navEl = document.getElementById('nav');
+window.addEventListener('scroll', function() {
+  navEl.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    var href = this.getAttribute('href');
+    var target = document.querySelector(href);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
